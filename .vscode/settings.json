@@ -18,5 +18,25 @@
     },
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#802490",
+        "activityBar.background": "#802490",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#1a1706",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "commandCenter.border": "#e7e7e799",
+        "sash.hoverBorder": "#802490",
+        "statusBar.background": "#5c1a67",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#802490",
+        "statusBarItem.remoteBackground": "#5c1a67",
+        "statusBarItem.remoteForeground": "#e7e7e7",
+        "titleBar.activeBackground": "#5c1a67",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#5c1a6799",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.color": "#5c1a67"
 }
