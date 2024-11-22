@@ -1,158 +1,168 @@
 <template>
-  <div class="flex flex-col">
-    <!-- Header -->
-    <div
-      class="flex flex-row h-[60px] justify-between items-center px-4 border-b border-gray-300"
-    >
-      <!-- Left -->
-      <h1 class="text-2xl font-bold">TailwindCSS Playground</h1>
+  <div class="flex flex-col h-full w-full">
+    <NxTailSpinLoader
+      :isLoading="isLoading"
+      :size="70"
+      :isCentered="true"
+      class="text-theme2-500 h-screen"
+      v-if="isLoading"
+    />
 
-      <!-- Right -->
-      <div class="flex flex-row">
-        <!-- Layout -->
-        <div
-          class="flex flex-row gap-3 border border-gray-300 px-2 py-1.5 rounded-md"
-        >
-          <button
-            v-for="layout in editorLayouts"
-            :key="layout.key"
-            @click="onEditorLayoutChange(layout)"
-            class="flex items-center justify-center w-8 h-8 border text-gray-500 hover:text-theme2-600 rounded-md"
-            :class="{
-              'bg-theme2-100 text-theme2-500':
-                selectedLayout.key === layout.key,
-            }"
-            :data-tippy-content="layout.label"
+    <template v-else>
+      <!-- Header -->
+      <div
+        class="flex flex-row h-[60px] justify-between items-center px-4 border-b border-gray-300"
+      >
+        <!-- Left -->
+        <h1 class="text-2xl font-bold">TailwindCSS Playground</h1>
+
+        <!-- Right -->
+        <div class="flex flex-row">
+          <!-- Layout -->
+          <div
+            class="flex flex-row gap-3 border border-gray-300 px-2 py-1.5 rounded-md"
           >
-            <component :is="layout.icon" class="size-5" />
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Body -->
-    <div
-      class="flex"
-      :class="{
-        'flex-col': selectedLayout.key === 'vertical',
-        'flex-row': selectedLayout.key === 'horizontal',
-      }"
-    >
-      <!-- Left -->
-      <div
-        class="flex flex-col"
-        :style="{
-          width:
-            selectedLayout.key === 'horizontal'
-              ? 'calc(100vw - ' + selectedBreakpoint?.width + ')'
-              : '100vw',
-          height:
-            selectedLayout.key === 'horizontal'
-              ? 'calc(100vh - 60px)'
-              : '500px',
-        }"
-      >
-        <Tabs :tabs="tabs" defaultTab="tab2">
-          <!-- Config Editor -->
-          <template #tab1>
-            <MonacoEditor
-              :code="tailwindConfig"
-              :height="
-                selectedLayout.key === 'horizontal'
-                  ? 'calc(100vh - 60px)'
-                  : '440px'
-              "
-              language="javascript"
-              :layout="selectedLayout"
-              @change="updateConfigBlock($event)"
-            />
-          </template>
-
-          <!-- Template Editor -->
-          <template #tab2>
-            <div>
-              <MonacoEditor
-                :code="codeBlock"
-                :height="
-                  selectedLayout.key === 'horizontal'
-                    ? 'calc(100vh - 60px)'
-                    : '440px'
-                "
-                :layout="selectedLayout"
-                :tailwindConfig="tailwindConfig"
-                @change="updateCodeBlock($event)"
-              />
-            </div>
-          </template>
-
-          <!-- CSS Editor -->
-          <template #tab3>
-            <div>
-              <MonacoEditor
-                :code="extraCss"
-                :height="
-                  selectedLayout.key === 'horizontal'
-                    ? 'calc(100vh - 60px)'
-                    : '440px'
-                "
-                :layout="selectedLayout"
-                language="css"
-                @change="updateCssBlock($event)"
-              />
-            </div>
-          </template>
-        </Tabs>
-      </div>
-
-      <!-- Right -->
-      <div
-        class="flex flex-col"
-        :style="{
-          width: selectedBreakpoint?.width + 'px',
-          height: 'calc(100vh - 60px)',
-        }"
-      >
-        <!-- Header -->
-        <div class="flex flex-row p-2 border-b border-gray-300 h-[55px]">
-          <!-- Device Breakpoints -->
-          <div class="flex flex-row gap-2">
             <button
-              v-for="screenBreakPoint in screenBreakPoints"
-              :key="screenBreakPoint.label"
-              class="flex items-center justify-center w-10 h-10 border border-gray-300 text-gray-500 hover:text-theme2-600 rounded-md"
+              v-for="layout in editorLayouts"
+              :key="layout.key"
+              @click="onEditorLayoutChange(layout)"
+              class="flex items-center justify-center w-8 h-8 border text-gray-500 hover:text-theme2-600 rounded-md"
               :class="{
-                'bg-theme2-100 border-theme2-400 text-theme2-600 hover:text-theme2-700':
-                  screenBreakPoint.key === selectedBreakpoint?.key,
+                'bg-theme2-100 text-theme2-500':
+                  selectedLayout.key === layout.key,
               }"
-              @click="onSelectBreakpoint(screenBreakPoint)"
-              :data-tippy-content="
-                screenBreakPoint.label + ' (<=' + screenBreakPoint.ref + 'px)'
-              "
+              :data-tippy-content="layout.label"
             >
-              <component
-                :is="screenBreakPoint.icon"
-                :style="{
-                  'stroke-width': '2px',
-                }"
-                class="size-5"
-              />
+              <component :is="layout.icon" class="size-5" />
             </button>
           </div>
+        </div>
+      </div>
 
-          <div class="flex flex-row"></div>
+      <!-- Body -->
+      <div
+        class="flex"
+        :class="{
+          'flex-col': selectedLayout.key === 'vertical',
+          'flex-row': selectedLayout.key === 'horizontal',
+        }"
+      >
+        <!-- Left -->
+        <div
+          class="flex flex-col"
+          :style="{
+            width:
+              selectedLayout.key === 'horizontal'
+                ? 'calc(100vw - ' + selectedBreakpoint?.width + ')'
+                : '100vw',
+            height:
+              selectedLayout.key === 'horizontal'
+                ? 'calc(100vh - 60px)'
+                : '500px',
+          }"
+        >
+          <Tabs :tabs="tabs" defaultTab="tab2">
+            <!-- Config Editor -->
+            <template #tab1>
+              <MonacoEditor
+                :code="tailwindConfig"
+                :height="
+                  selectedLayout.key === 'horizontal'
+                    ? 'calc(100vh - 60px)'
+                    : '440px'
+                "
+                language="javascript"
+                :layout="selectedLayout"
+                @change="updateConfigBlock($event)"
+              />
+            </template>
+
+            <!-- Template Editor -->
+            <template #tab2>
+              <div>
+                <MonacoEditor
+                  :code="codeBlock"
+                  :height="
+                    selectedLayout.key === 'horizontal'
+                      ? 'calc(100vh - 60px)'
+                      : '440px'
+                  "
+                  :layout="selectedLayout"
+                  :tailwindConfig="tailwindConfig"
+                  @change="updateCodeBlock($event)"
+                />
+              </div>
+            </template>
+
+            <!-- CSS Editor -->
+            <template #tab3>
+              <div>
+                <MonacoEditor
+                  :code="extraCss"
+                  :height="
+                    selectedLayout.key === 'horizontal'
+                      ? 'calc(100vh - 60px)'
+                      : '440px'
+                  "
+                  :layout="selectedLayout"
+                  language="css"
+                  @change="updateCssBlock($event)"
+                />
+              </div>
+            </template>
+          </Tabs>
         </div>
 
-        <!-- Body -->
-        <iframe
-          class="w-full h-full border border-gray-300 border-t-0 mx-auto"
-          :srcdoc="previewBaseCode"
+        <!-- Right -->
+        <div
+          class="flex flex-col"
           :style="{
-            width: selectedBreakpoint?.width,
+            width: selectedBreakpoint?.width + 'px',
             height: 'calc(100vh - 60px)',
           }"
-        ></iframe>
+        >
+          <!-- Header -->
+          <div class="flex flex-row p-2 border-b border-gray-300 h-[55px]">
+            <!-- Device Breakpoints -->
+            <div class="flex flex-row gap-2">
+              <button
+                v-for="screenBreakPoint in screenBreakPoints"
+                :key="screenBreakPoint.label"
+                class="flex items-center justify-center w-10 h-10 border border-gray-300 text-gray-500 hover:text-theme2-600 rounded-md"
+                :class="{
+                  'bg-theme2-100 border-theme2-400 text-theme2-600 hover:text-theme2-700':
+                    screenBreakPoint.key === selectedBreakpoint?.key,
+                }"
+                @click="onSelectBreakpoint(screenBreakPoint)"
+                :data-tippy-content="
+                  screenBreakPoint.label + ' (<=' + screenBreakPoint.ref + 'px)'
+                "
+              >
+                <component
+                  :is="screenBreakPoint.icon"
+                  :style="{
+                    'stroke-width': '2px',
+                  }"
+                  class="size-5"
+                />
+              </button>
+            </div>
+
+            <div class="flex flex-row"></div>
+          </div>
+
+          <!-- Body -->
+          <iframe
+            class="w-full h-full border border-gray-300 border-t-0 mx-auto"
+            :srcdoc="previewBaseCode"
+            :style="{
+              width: selectedBreakpoint?.width,
+              height: 'calc(100vh - 60px)',
+            }"
+          ></iframe>
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -181,6 +191,7 @@
   // third-party
   import tippy from 'tippy.js';
   import localForage from 'localforage';
+  import { NxTailSpinLoader } from '@ngeenx/nx-vue-svg-loaders';
 
   const tailwindConfig = ref(`export default {
     theme: {
@@ -242,6 +253,8 @@
     { name: 'tab2', label: 'Editor', icon: LayoutPanelTop },
     { name: 'tab3', label: 'CSS', icon: Palette },
   ];
+
+  const isLoading = ref(true);
 
   // #region Code Editor / Preview
 
@@ -437,5 +450,9 @@
 
     restoreLayout();
     restoreBreakpoint();
+
+    setTimeout(() => {
+      isLoading.value = false;
+    }, Math.random() * 1000);
   });
 </script>
