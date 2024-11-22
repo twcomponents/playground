@@ -29,14 +29,16 @@
               :key="screenBreakPoint.label"
               class="flex items-center justify-center w-10 h-10 border border-theme1-300 text-theme1-500 hover:text-theme1-600 rounded-md"
               :class="{
-                'bg-theme2-200': screenBreakPoint === selectedBreakpoint,
+                'bg-theme2-100 border-theme2-400 text-theme2-600':
+                  screenBreakPoint.key === selectedBreakpoint?.key,
               }"
-              @click="selectedBreakpoint = screenBreakPoint"
+              @click="onSelectBreakpoint(screenBreakPoint)"
+              :data-tippy-content="screenBreakPoint.label"
             >
               <component
                 :is="screenBreakPoint.icon"
                 :style="{
-                  'stroke-width': '1px',
+                  'stroke-width': '2px',
                 }"
                 class="size-5"
               />
@@ -55,7 +57,7 @@
 
 <script setup lang="ts">
   // native
-  import { ref } from 'vue';
+  import { onMounted, ref } from 'vue';
 
   // components
   import MonacoEditor from '@/shared/components/MonacoEditor.vue';
@@ -68,6 +70,9 @@
     Laptop,
     ScreenShare,
   } from 'lucide-vue-next';
+
+  // third-party
+  import tippy from 'tippy.js';
 
   const previewBaseCodeTemplate = ref(`<!DOCTYPE html>
 <html lang="en">
@@ -129,4 +134,13 @@
   ];
 
   const selectedBreakpoint = ref(screenBreakPoints[3]);
+
+  const onSelectBreakpoint = (breakpoint: any) => {
+    console.log(breakpoint);
+    selectedBreakpoint.value = breakpoint;
+  };
+
+  onMounted(() => {
+    tippy('[data-tippy-content]');
+  });
 </script>
