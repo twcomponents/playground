@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
   // native
-  import { onMounted, ref } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
 
   // monaco
   import * as monaco from 'monaco-editor';
@@ -38,6 +38,28 @@
       type: String,
       default: '500px',
     },
+    layout: {
+      type: Object,
+      default: '500px',
+    },
+  });
+
+  let editor: monaco.editor.IStandaloneCodeEditor | null = null;
+
+  watch(
+    () => props.layout,
+    () => {
+      setTimeout(() => {
+        if (editor) {
+          console.log('code changed', props.layout, editor.getValue());
+          editor.layout();
+        }
+      }, 500);
+    }
+  );
+
+  defineExpose({
+    editor,
   });
 
   onMounted(() => {
@@ -52,7 +74,7 @@
 
       configureMonacoTailwindcss(monaco, {});
 
-      const editor = monaco.editor.create(editorContainer.value, {
+      editor = monaco.editor.create(editorContainer.value, {
         value: props.code,
         language: props.language ?? 'html',
         theme: props.theme ?? 'vs-dark',
@@ -60,7 +82,7 @@
       });
 
       editor.onDidChangeModelContent(() => {
-        emitters('change', editor.getValue());
+        emitters('change', editor?.getValue());
       });
     }
   });
