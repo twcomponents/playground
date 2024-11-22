@@ -53,6 +53,7 @@
         }"
       >
         <Tabs :tabs="tabs" defaultTab="tab2">
+          <!-- Config Editor -->
           <template #tab1>
             <MonacoEditor
               :code="tailwindConfig"
@@ -66,10 +67,11 @@
               @change="updateConfigBlock($event)"
             />
           </template>
+
+          <!-- Template Editor -->
           <template #tab2>
             <div>
               <MonacoEditor
-                ref="monacoEditorRef"
                 :code="codeBlock"
                 :height="
                   selectedLayout.key === 'horizontal'
@@ -78,6 +80,23 @@
                 "
                 :layout="selectedLayout"
                 @change="updateCodeBlock($event)"
+              />
+            </div>
+          </template>
+
+          <!-- CSS Editor -->
+          <template #tab3>
+            <div>
+              <MonacoEditor
+                :code="extraCss"
+                :height="
+                  selectedLayout.key === 'horizontal'
+                    ? 'calc(100vh - 60px)'
+                    : '440px'
+                "
+                :layout="selectedLayout"
+                language="css"
+                @change="updateCssBlock($event)"
               />
             </div>
           </template>
@@ -157,8 +176,6 @@
   import tippy from 'tippy.js';
   import localForage from 'localforage';
 
-  const monacoEditorRef = ref<any>(null);
-
   const tailwindConfig = ref(`export default {
     theme: {
     extend: {
@@ -201,16 +218,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"><\/script>
     <script>#CONFIG#<\/script>
+    <style>#CSS#<\/style>
   </head>
   <body>
     #HTML#
   </body>
   </html>`);
 
+  const extraCss = ref(`.custom {
+    height: 100px;
+    width: 100px;
+    background-color: red;
+}`);
+
   const tabs = [
     { name: 'tab1', label: 'Config' },
     { name: 'tab2', label: 'Editor' },
+    { name: 'tab3', label: 'CSS' },
   ];
+
+  // #region Code Editor / Preview
 
   const codeBlock = ref(`<!-- component -->
 <div class="w-full">
@@ -258,6 +285,7 @@
   const previewBaseCode = ref(
     previewBaseCodeTemplate.value
       .replace('#HTML#', codeBlock.value)
+      .replace('#CSS#', codeBlock.value)
       .replace('#CONFIG#', tailwindConfig.value)
       .replace('export default {', 'tailwind.config = {')
   );
@@ -274,12 +302,21 @@
     updatePreviewCode();
   };
 
+  const updateCssBlock = (code: string) => {
+    tailwindConfig.value = code;
+
+    updatePreviewCode();
+  };
+
   const updatePreviewCode = () => {
     previewBaseCode.value = previewBaseCodeTemplate.value
       .replace('#HTML#', codeBlock.value)
       .replace('#CONFIG#', tailwindConfig.value)
+      .replace('#CSS#', extraCss.value)
       .replace('export default {', 'tailwind.config = {');
   };
+
+  // #endregion
 
   // #region Device Breakpoints
 
