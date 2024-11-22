@@ -14,6 +14,7 @@
   import * as monaco from 'monaco-editor';
   import {
     configureMonacoTailwindcss,
+    MonacoTailwindcss,
     tailwindcssData,
   } from 'monaco-tailwindcss';
 
@@ -57,6 +58,7 @@
   });
 
   let editor: monaco.editor.IStandaloneCodeEditor | null = null;
+  let monacoTailwindcss: MonacoTailwindcss | null = null;
 
   watch(
     () => props.layout,
@@ -68,7 +70,8 @@
   watch(
     () => props.tailwindConfig,
     () => {
-      handleTailwindConfigChange();
+      console.log('tailwindConfig changed', monacoTailwindcss);
+      monacoTailwindcss?.setTailwindConfig(handleTailwindConfigChange());
     }
   );
 
@@ -81,11 +84,13 @@
       console.error(error);
     }
 
-    configureMonacoTailwindcss(monaco, config);
+    return config;
   };
 
-  onMounted(() => {
+  const initEditor = () => {
     if (editorContainer.value) {
+      handleTailwindConfigChange();
+
       monaco.languages.css.cssDefaults.setOptions({
         data: {
           dataProviders: {
@@ -94,33 +99,33 @@
         },
       });
 
-      window.MonacoEnvironment = {
-        getWorker(moduleId, label) {
-          switch (label) {
-            case 'editorWorkerService':
-              return new EditorWorker();
-            case 'css':
-            case 'less':
-            case 'scss':
-              return new CssWorker();
-            case 'handlebars':
-            case 'html':
-            case 'razor':
-              return new HtmlWorker();
-            case 'json':
-              return new JsonWorker();
-            case 'javascript':
-            case 'typescript':
-              return new TypescriptWorker();
-            case 'tailwindcss':
-              return new TailwindcssWorker();
-            default:
-              throw new Error(`Unknown label ${label}`);
-          }
-        },
-      };
-
-      handleTailwindConfigChange();
+      if (window.MonacoEnvironment === undefined) {
+        window.MonacoEnvironment = {
+          getWorker(_moduleId, label) {
+            switch (label) {
+              case 'editorWorkerService':
+                return new EditorWorker();
+              case 'css':
+              case 'less':
+              case 'scss':
+                return new CssWorker();
+              case 'handlebars':
+              case 'html':
+              case 'razor':
+                return new HtmlWorker();
+              case 'json':
+                return new JsonWorker();
+              case 'javascript':
+              case 'typescript':
+                return new TypescriptWorker();
+              case 'tailwindcss':
+                return new TailwindcssWorker();
+              default:
+                throw new Error(`Unknown label ${label}`);
+            }
+          },
+        };
+      }
 
       editor = monaco.editor.create(editorContainer.value, {
         value: props.code,
@@ -138,7 +143,24 @@
       editor.onDidChangeModelContent(() => {
         emitters('change', editor?.getValue());
       });
+
+      monacoTailwindcss = configureMonacoTailwindcss(
+        monaco,
+        handleTailwindConfigChange()
+      );
     }
+  };
+
+  const resetEditor = () => {
+    if (editor) {
+      editor.dispose();
+      editor = null;
+    }
+  };
+
+  onMounted(() => {
+    resetEditor();
+    initEditor();
   });
 </script>
 
