@@ -75,13 +75,15 @@
   );
 
   const handleTailwindConfigChange = () => {
-    let config = {},
+    let config = {
+        darkMode: 'class',
+      },
       configString = props.tailwindConfig.replace('export default', '');
 
     try {
-      config = JSON.parse(configString);
+      config = JSON.parse(configString.replace(/(\w+):/g, '"$1":'));
     } catch (error) {
-      console.error(error, configString);
+      console.error(error, configString.replace(/(\w+):/g, '"$1":'));
     }
 
     return config;

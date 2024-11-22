@@ -235,8 +235,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"><\/script>
     <script>#CONFIG#<\/script>
+    <script>
+    function updateUrls() {
+        var urls = document.querySelectorAll("a");
+
+        for (var i = 0; i < urls.length; i++) {
+            if (urls[i].getAttribute('href') === '#') {
+                urls[i].removeAttribute('href');
+            } else {
+                urls[i].setAttribute('target', '_blank');
+            }
+        }
+    }
+    <\/script>
     </head>
-  <body>
+  <body onload="updateUrls()">
     <style>#CSS#<\/style>
     #HTML#
   </body>
@@ -348,15 +361,17 @@
       }
     });
 
-    localForage.getItem('code-block').then((code) => {
-      if (code) {
-        codeBlock.value = code.toString();
-      }
-    });
-
     localForage.getItem('extra-css').then((css) => {
       if (css) {
         extraCss.value = css.toString();
+      }
+    });
+
+    localForage.getItem('code-block').then((code) => {
+      if (code) {
+        setTimeout(() => {
+          codeBlock.value = code.toString();
+        }, 500);
       }
     });
   };
