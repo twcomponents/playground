@@ -155,6 +155,7 @@
 
   // third-party
   import tippy from 'tippy.js';
+  import localForage from 'localforage';
 
   const monacoEditorRef = ref<any>(null);
 
@@ -347,7 +348,7 @@
 
   const selectedLayout = ref(editorLayouts[1]);
 
-  const onEditorLayoutChange = (layout: any) => {
+  const onEditorLayoutChange = async (layout: any) => {
     selectedLayout.value = layout;
 
     if (layout.key === 'horizontal' && selectedBreakpoint.value.key === '2xl') {
@@ -356,11 +357,24 @@
           screenBreakPoints.findIndex((breakpoint) => breakpoint.key === 'xl')
         ];
     }
+
+    await localForage.setItem('editor-layout', layout.key);
+  };
+
+  const restoreLayout = async () => {
+    await localForage.getItem('editor-layout').then((layout) => {
+      if (layout) {
+        selectedLayout.value =
+          editorLayouts.find((l) => l.key === layout) || editorLayouts[1];
+      }
+    });
   };
 
   // #endregion
 
   onMounted(() => {
     tippy('[data-tippy-content]');
+
+    restoreLayout();
   });
 </script>

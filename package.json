@@ -11,6 +11,7 @@
     "eslint": "eslint --ext .js,.ts,.vue ./src"
   },
   "dependencies": {
+    "localforage": "^1.10.0",
     "lucide-vue-next": "^0.460.0",
     "monaco-editor": "^0.52.0",
     "monaco-tailwindcss": "file:../../delete/monaco-tailwindcss",
