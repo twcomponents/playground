@@ -343,7 +343,7 @@
     },
   ];
 
-  const selectedLayout = ref(editorLayouts[0]);
+  const selectedLayout = ref(editorLayouts[1]);
 
   const onEditorLayoutChange = (layout: any) => {
     selectedLayout.value = layout;

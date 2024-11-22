@@ -42,6 +42,10 @@
       type: Object,
       default: '500px',
     },
+    tailwindConfig: {
+      type: Object,
+      default: {},
+    },
   });
 
   let editor: monaco.editor.IStandaloneCodeEditor | null = null;
