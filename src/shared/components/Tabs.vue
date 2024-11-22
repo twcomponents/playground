@@ -1,11 +1,11 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col items-center">
     <div class="border-b h-[55px]">
       <button
         v-for="tab in tabs"
         :key="tab.name"
         :class="[
-          'border-b border-gray-300 px-5 py-3',
+          'border-b border-gray-300 px-5 py-2',
           { 'border-theme1-500': activeTab === tab.name },
         ]"
         @click="setActiveTab(tab.name)"
