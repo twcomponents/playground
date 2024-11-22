@@ -52,15 +52,24 @@
               : '500px',
         }"
       >
-        <MonacoEditor
-          ref="monacoEditorRef"
-          :code="codeBlock"
-          :height="
-            selectedLayout.key === 'horizontal' ? 'calc(100vh - 60px)' : '500px'
-          "
-          :layout="selectedLayout"
-          @change="updateCodeBlock($event)"
-        />
+        <Tabs :tabs="tabs" defaultTab="tab1">
+          <template #tab1>
+            <MonacoEditor
+              ref="monacoEditorRef"
+              :code="codeBlock"
+              :height="
+                selectedLayout.key === 'horizontal'
+                  ? 'calc(100vh - 60px)'
+                  : '500px'
+              "
+              :layout="selectedLayout"
+              @change="updateCodeBlock($event)"
+            />
+          </template>
+          <template #tab2>
+            <div>This is content for Tab 2.</div>
+          </template>
+        </Tabs>
       </div>
 
       <!-- Right -->
@@ -72,7 +81,7 @@
         }"
       >
         <!-- Header -->
-        <div class="flex flex-row p-2 border-b border-gray-300">
+        <div class="flex flex-row p-2 border-b border-gray-300 h-[55px]">
           <!-- Device Breakpoints -->
           <div class="flex flex-row gap-2">
             <button
@@ -119,6 +128,7 @@
 
   // components
   import MonacoEditor from '@/shared/components/MonacoEditor.vue';
+  import Tabs from '@/shared/components/Tabs.vue';
 
   // icons
   import {
@@ -147,6 +157,11 @@
     #REPLACE#
   </body>
   </html>`);
+
+  const tabs = [
+    { name: 'tab1', label: 'Config' },
+    { name: 'tab2', label: 'Editor' },
+  ];
 
   const codeBlock = ref(`<h1>hello world</h1>`);
 
