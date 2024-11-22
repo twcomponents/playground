@@ -17,26 +17,7 @@
         <h1 class="text-2xl font-bold">TailwindCSS Playground</h1>
 
         <!-- Right -->
-        <div class="flex flex-row">
-          <!-- Layout -->
-          <div
-            class="flex flex-row gap-3 border border-gray-300 px-2 py-1.5 rounded-md"
-          >
-            <button
-              v-for="layout in editorLayouts"
-              :key="layout.key"
-              @click="onEditorLayoutChange(layout)"
-              class="flex items-center justify-center w-8 h-8 border text-gray-500 hover:text-theme2-600 rounded-md"
-              :class="{
-                'bg-theme2-100 text-theme2-500':
-                  selectedLayout.key === layout.key,
-              }"
-              :data-tippy-content="layout.label"
-            >
-              <component :is="layout.icon" class="size-5" />
-            </button>
-          </div>
-        </div>
+        <div class="flex flex-row"></div>
       </div>
 
       <!-- Body -->
@@ -122,7 +103,9 @@
           }"
         >
           <!-- Header -->
-          <div class="flex flex-row p-2 border-b border-gray-300 h-[55px]">
+          <div
+            class="flex flex-row justify-between p-2 border-b border-gray-300 h-[55px]"
+          >
             <!-- Device Breakpoints -->
             <div class="flex flex-row gap-2">
               <button
@@ -148,7 +131,24 @@
               </button>
             </div>
 
-            <div class="flex flex-row"></div>
+            <!-- Layout -->
+            <div class="flex flex-row">
+              <div class="flex flex-row gap-3">
+                <button
+                  v-for="layout in editorLayouts"
+                  :key="layout.key"
+                  @click="onEditorLayoutChange(layout)"
+                  class="flex items-center justify-center w-8 h-8 border text-gray-500 hover:text-theme2-600 rounded-md"
+                  :class="{
+                    'bg-theme2-100 text-theme2-500':
+                      selectedLayout.key === layout.key,
+                  }"
+                  :data-tippy-content="layout.label"
+                >
+                  <component :is="layout.icon" class="size-5" />
+                </button>
+              </div>
+            </div>
           </div>
 
           <!-- Body -->

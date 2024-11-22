@@ -70,18 +70,18 @@
   watch(
     () => props.tailwindConfig,
     () => {
-      console.log('tailwindConfig changed', monacoTailwindcss);
       monacoTailwindcss?.setTailwindConfig(handleTailwindConfigChange());
     }
   );
 
   const handleTailwindConfigChange = () => {
-    let config = {};
+    let config = {},
+      configString = props.tailwindConfig.replace('export default', '');
 
     try {
-      config = JSON.parse(props.tailwindConfig.replace('export default', ''));
+      config = JSON.parse(configString);
     } catch (error) {
-      console.error(error);
+      console.error(error, configString);
     }
 
     return config;
