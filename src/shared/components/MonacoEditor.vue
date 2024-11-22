@@ -130,6 +130,9 @@
         stickyScroll: {
           enabled: false,
         },
+        autoIndent: 'keep',
+        formatOnPaste: true,
+        formatOnType: true,
       });
 
       editor.onDidChangeModelContent(() => {
