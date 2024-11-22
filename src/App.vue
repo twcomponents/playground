@@ -60,7 +60,7 @@
               :height="
                 selectedLayout.key === 'horizontal'
                   ? 'calc(100vh - 60px)'
-                  : '500px'
+                  : '440px'
               "
               :layout="selectedLayout"
               @change="updateCodeBlock($event)"
