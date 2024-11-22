@@ -278,7 +278,7 @@
       codeBlock.value
     );
 
-    previewBaseCode.value = tailwindConfig.value.replace(
+    previewBaseCode.value = previewBaseCodeTemplate.value.replace(
       '#CONFIG#',
       tailwindConfig.value
     );
