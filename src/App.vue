@@ -158,7 +158,7 @@
 
   const monacoEditorRef = ref<any>(null);
 
-  const tailwindConfig = ref(`tailwind.config = {
+  const tailwindConfig = ref(`export default {
     theme: {
     extend: {
       colors: {
@@ -258,6 +258,7 @@
     previewBaseCodeTemplate.value
       .replace('#HTML#', codeBlock.value)
       .replace('#CONFIG#', tailwindConfig.value)
+      .replace('export default {', 'tailwind.config = {')
   );
 
   const updateCodeBlock = (code: string) => {
@@ -275,7 +276,8 @@
   const updatePreviewCode = () => {
     previewBaseCode.value = previewBaseCodeTemplate.value
       .replace('#HTML#', codeBlock.value)
-      .replace('#CONFIG#', tailwindConfig.value);
+      .replace('#CONFIG#', tailwindConfig.value)
+      .replace('export default {', 'tailwind.config = {');
   };
 
   // #region Device Breakpoints
