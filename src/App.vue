@@ -173,6 +173,9 @@
     ScreenShare,
     Columns2,
     Rows2,
+    Bolt,
+    LayoutPanelTop,
+    Palette,
   } from 'lucide-vue-next';
 
   // third-party
@@ -235,9 +238,9 @@
 }`);
 
   const tabs = [
-    { name: 'tab1', label: 'Config' },
-    { name: 'tab2', label: 'Editor' },
-    { name: 'tab3', label: 'CSS' },
+    { name: 'tab1', label: 'Config', icon: Bolt },
+    { name: 'tab2', label: 'Editor', icon: LayoutPanelTop },
+    { name: 'tab3', label: 'CSS', icon: Palette },
   ];
 
   // #region Code Editor / Preview

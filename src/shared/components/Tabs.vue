@@ -6,12 +6,22 @@
         v-for="tab in tabs"
         :key="tab.name"
         :class="[
-          'border-b border-gray-300 px-5 py-2',
+          'flex flex-row gap-3 justify-center items-center border-b border-gray-300 px-5 py-2',
           { 'border-theme1-500': activeTab === tab.name },
         ]"
         @click="setActiveTab(tab.name)"
       >
-        {{ tab.label }}
+        <component
+          :is="tab.icon"
+          class="size-4 text-gray-600"
+          :style="{
+            'stroke-width': '2px',
+          }"
+        ></component>
+
+        <span>
+          {{ tab.label }}
+        </span>
       </button>
     </div>
 
