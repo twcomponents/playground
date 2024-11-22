@@ -17,6 +17,14 @@
     tailwindcssData,
   } from 'monaco-tailwindcss';
 
+  // workers
+  import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker.js?worker';
+  import TailwindcssWorker from '../lib/tailwindcss.worker.js?worker';
+  import CssWorker from 'monaco-editor/esm/vs/language/css/css.worker.js?worker';
+  import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker.js?worker';
+  import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker.js?worker';
+  import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker.js?worker';
+
   const editorContainer = ref(null);
 
   const emitters = defineEmits(['change']);
@@ -85,6 +93,32 @@
           },
         },
       });
+
+      window.MonacoEnvironment = {
+        getWorker(moduleId, label) {
+          switch (label) {
+            case 'editorWorkerService':
+              return new EditorWorker();
+            case 'css':
+            case 'less':
+            case 'scss':
+              return new CssWorker();
+            case 'handlebars':
+            case 'html':
+            case 'razor':
+              return new HtmlWorker();
+            case 'json':
+              return new JsonWorker();
+            case 'javascript':
+            case 'typescript':
+              return new TypescriptWorker();
+            case 'tailwindcss':
+              return new TailwindcssWorker();
+            default:
+              throw new Error(`Unknown label ${label}`);
+          }
+        },
+      };
 
       handleTailwindConfigChange();
 
