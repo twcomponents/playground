@@ -79,6 +79,7 @@
                     : '440px'
                 "
                 :layout="selectedLayout"
+                :tailwindConfig="tailwindConfig"
                 @change="updateCodeBlock($event)"
               />
             </div>
@@ -218,9 +219,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"><\/script>
     <script>#CONFIG#<\/script>
-    <style>#CSS#<\/style>
-  </head>
+    </head>
   <body>
+    <style>#CSS#<\/style>
     #HTML#
   </body>
   </html>`);

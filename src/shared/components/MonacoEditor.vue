@@ -43,8 +43,8 @@
       default: '500px',
     },
     tailwindConfig: {
-      type: Object,
-      default: {},
+      type: String,
+      default: '',
     },
   });
 
@@ -57,9 +57,24 @@
     }
   );
 
-  defineExpose({
-    editor,
-  });
+  watch(
+    () => props.tailwindConfig,
+    () => {
+      handleTailwindConfigChange();
+    }
+  );
+
+  const handleTailwindConfigChange = () => {
+    let config = {};
+
+    try {
+      config = JSON.parse(props.tailwindConfig.replace('export default', ''));
+    } catch (error) {
+      console.error(error);
+    }
+
+    configureMonacoTailwindcss(monaco, config);
+  };
 
   onMounted(() => {
     if (editorContainer.value) {
@@ -71,7 +86,7 @@
         },
       });
 
-      configureMonacoTailwindcss(monaco, {});
+      handleTailwindConfigChange();
 
       editor = monaco.editor.create(editorContainer.value, {
         value: props.code,
