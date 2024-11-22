@@ -309,20 +309,26 @@
       .replace('export default {', 'tailwind.config = {')
   );
 
-  const updateCodeBlock = (code: string) => {
+  const updateConfigBlock = async (code: string) => {
+    tailwindConfig.value = code;
+
+    await localForage.setItem('tailwind-config', code);
+
+    updatePreviewCode();
+  };
+
+  const updateCodeBlock = async (code: string) => {
     codeBlock.value = code;
 
-    updatePreviewCode();
-  };
-
-  const updateConfigBlock = (code: string) => {
-    tailwindConfig.value = code;
+    await localForage.setItem('code-block', code);
 
     updatePreviewCode();
   };
 
-  const updateCssBlock = (code: string) => {
+  const updateCssBlock = async (code: string) => {
     tailwindConfig.value = code;
+
+    await localForage.setItem('extra-css', code);
 
     updatePreviewCode();
   };
@@ -333,6 +339,26 @@
       .replace('#CONFIG#', tailwindConfig.value)
       .replace('#CSS#', extraCss.value)
       .replace('export default {', 'tailwind.config = {');
+  };
+
+  const restoreCodes = async () => {
+    await localForage.getItem('tailwind-config').then((config) => {
+      if (config) {
+        tailwindConfig.value = config.toString();
+      }
+    });
+
+    localForage.getItem('code-block').then((code) => {
+      if (code) {
+        codeBlock.value = code.toString();
+      }
+    });
+
+    localForage.getItem('extra-css').then((css) => {
+      if (css) {
+        extraCss.value = css.toString();
+      }
+    });
   };
 
   // #endregion
@@ -450,6 +476,7 @@
 
     restoreLayout();
     restoreBreakpoint();
+    restoreCodes();
 
     setTimeout(() => {
       isLoading.value = false;
