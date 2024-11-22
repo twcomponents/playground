@@ -125,7 +125,9 @@
                   screenBreakPoint.key === selectedBreakpoint?.key,
               }"
               @click="onSelectBreakpoint(screenBreakPoint)"
-              :data-tippy-content="screenBreakPoint.label"
+              :data-tippy-content="
+                screenBreakPoint.label + ' (<=' + screenBreakPoint.ref + 'px)'
+              "
             >
               <component
                 :is="screenBreakPoint.icon"
@@ -327,30 +329,35 @@
       icon: Smartphone,
       width: '640px',
       label: 'Phone',
+      ref: 640,
     },
     {
       key: 'md',
       icon: TabletSmartphone,
       width: '768px',
       label: 'Phablet',
+      ref: 768,
     },
     {
       key: 'lg',
       icon: Tablet,
       width: '1024px',
       label: 'Tablet',
+      ref: 1024,
     },
     {
       key: 'xl',
       icon: Laptop,
       width: '1280px',
       label: 'Laptop',
+      ref: 1280,
     },
     {
       key: '2xl',
       icon: ScreenShare,
       width: '100%',
       label: 'Desktop',
+      ref: 1536,
     },
   ];
 
