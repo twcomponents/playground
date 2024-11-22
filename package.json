@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "monaco-editor": "^0.52.0",
+    "monaco-tailwindcss": "file:../../delete/monaco-tailwindcss",
     "vue": "^3.5.12"
   },
   "devDependencies": {

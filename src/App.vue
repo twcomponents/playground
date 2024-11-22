@@ -1,41 +1,49 @@
 <template>
-  <MonacoEditor />
+  <div class="flex flex-row">
+    <!-- Left -->
+    <div class="flex flex-col w-1/2">
+      <MonacoEditor
+        :code="codeBlock"
+        :height="'100vh'"
+        @change="updateCodeBlock($event)"
+      />
+    </div>
+
+    <!-- Right -->
+    <div class="flex flex-col w-1/2">
+      <iframe class="w-full h-full" :srcdoc="previewBaseCode"></iframe>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-  import MonacoEditor from '@/components/features/MonacoEditor.vue';
+  import { ref } from 'vue';
+
+  import MonacoEditor from '@/shared/components/MonacoEditor.vue';
+
+  const previewBaseCodeTemplate = ref(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"><\/script>
+</head>
+<body>
+  #REPLACE#
+</body>
+</html>`);
+
+  const codeBlock = ref(`<h1>hello world</h1>`);
+
+  const previewBaseCode = ref(
+    previewBaseCodeTemplate.value.replace('#REPLACE#', codeBlock.value)
+  );
+
+  const updateCodeBlock = (code: string) => {
+    codeBlock.value = code;
+    previewBaseCode.value = previewBaseCodeTemplate.value.replace(
+      '#REPLACE#',
+      code
+    );
+  };
 </script>
-
-<style scoped lang="scss">
-  .logos {
-    @apply flex flex-row gap-5;
-
-    .logo {
-      @apply size-32;
-
-      padding: 1.5em;
-      will-change: filter;
-      transition: filter 300ms;
-
-      &.vite:hover {
-        filter: drop-shadow(0 0 2em #bd34feaa);
-      }
-
-      &.vue:hover {
-        filter: drop-shadow(0 0 2em #41b883aa);
-      }
-
-      &.ts:hover {
-        filter: drop-shadow(0 0 2em #3178c6aa);
-      }
-
-      &.sass:hover {
-        filter: drop-shadow(0 0 2em #cd6799aa);
-      }
-
-      &.tw:hover {
-        filter: drop-shadow(0 0 2em #44a8b3aa);
-      }
-    }
-  }
-</style>
