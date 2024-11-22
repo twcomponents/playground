@@ -23,6 +23,9 @@ importers:
       '@ctrl/tinycolor':
         specifier: ^3.0.0
         version: 3.6.1
+      '@ngeenx/nx-vue-svg-loaders':
+        specifier: ^1.0.2
+        version: 1.0.2(vue@3.5.12(typescript@5.6.3))
       color-name:
         specifier: ^2.0.0
         version: 2.0.0
@@ -407,6 +410,11 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@ngeenx/nx-vue-svg-loaders@1.0.2':
+    resolution: {integrity: sha512-qSVB3dxC7r4s+frXYY7dDuSgaqM7JJf07dtiiBU0X9dKLzxtxKu3s1WmZJGRcWfIwR5cfd/J/H498Y7OKjZaMA==}
+    peerDependencies:
+      vue: ^3.0.0
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2659,6 +2667,10 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@ngeenx/nx-vue-svg-loaders@1.0.2(vue@3.5.12(typescript@5.6.3))':
+    dependencies:
+      vue: 3.5.12(typescript@5.6.3)
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
