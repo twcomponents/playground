@@ -318,7 +318,7 @@
 
   const selectedBreakpoint = ref(screenBreakPoints[3]);
 
-  const onSelectBreakpoint = (breakpoint: any) => {
+  const onSelectBreakpoint = async (breakpoint: any) => {
     selectedBreakpoint.value = breakpoint;
 
     if (breakpoint.key === '2xl') {
@@ -327,6 +327,18 @@
           editorLayouts.findIndex((layout) => layout.key === 'vertical')
         ];
     }
+
+    await localForage.setItem('preview-breakpoint', breakpoint.key);
+  };
+
+  const restoreBreakpoint = async () => {
+    await localForage.getItem('preview-breakpoint').then((breakpoint) => {
+      if (breakpoint) {
+        selectedBreakpoint.value =
+          screenBreakPoints.find((l) => l.key === breakpoint) ||
+          screenBreakPoints[1];
+      }
+    });
   };
 
   // #endregion
@@ -376,5 +388,6 @@
     tippy('[data-tippy-content]');
 
     restoreLayout();
+    restoreBreakpoint();
   });
 </script>
