@@ -274,7 +274,7 @@
 
   const updatePreviewCode = () => {
     previewBaseCode.value = previewBaseCodeTemplate.value
-      .replace('#REPLACE#', codeBlock.value)
+      .replace('#HTML#', codeBlock.value)
       .replace('#CONFIG#', tailwindConfig.value);
   };
 
