@@ -273,15 +273,9 @@
   };
 
   const updatePreviewCode = () => {
-    previewBaseCode.value = previewBaseCodeTemplate.value.replace(
-      '#REPLACE#',
-      codeBlock.value
-    );
-
-    previewBaseCode.value = previewBaseCodeTemplate.value.replace(
-      '#CONFIG#',
-      tailwindConfig.value
-    );
+    previewBaseCode.value = previewBaseCodeTemplate.value
+      .replace('#REPLACE#', codeBlock.value)
+      .replace('#CONFIG#', tailwindConfig.value);
   };
 
   // #region Device Breakpoints
