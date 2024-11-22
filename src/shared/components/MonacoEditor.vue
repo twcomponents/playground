@@ -49,12 +49,7 @@
   watch(
     () => props.layout,
     () => {
-      setTimeout(() => {
-        if (editor) {
-          console.log('code changed', props.layout, editor.getValue());
-          editor.layout();
-        }
-      }, 500);
+      editor?.layout();
     }
   );
 

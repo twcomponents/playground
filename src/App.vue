@@ -229,10 +229,15 @@
 
   const selectedLayout = ref(editorLayouts[0]);
 
-  const onEditorLayoutChange = (_layout: any) => {
-    selectedLayout.value = _layout;
+  const onEditorLayoutChange = (layout: any) => {
+    selectedLayout.value = layout;
 
-    monacoEditorRef.value?.editor?.layout();
+    if (layout.key === 'horizontal' && selectedBreakpoint.value.key === '2xl') {
+      selectedBreakpoint.value =
+        screenBreakPoints[
+          screenBreakPoints.findIndex((breakpoint) => breakpoint.key === 'xl')
+        ];
+    }
   };
 
   // #endregion
