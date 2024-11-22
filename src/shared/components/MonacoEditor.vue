@@ -78,6 +78,9 @@
         language: props.language ?? 'html',
         theme: props.theme ?? 'vs-dark',
         automaticLayout: true,
+        stickyScroll: {
+          enabled: false,
+        },
       });
 
       editor.onDidChangeModelContent(() => {
