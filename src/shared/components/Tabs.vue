@@ -1,6 +1,7 @@
 <template>
-  <div class="flex flex-col items-center">
-    <div class="border-b h-[55px]">
+  <div class="flex flex-col">
+    <!-- Tabs -->
+    <div class="flex flex-row justify-center items-center border-b h-[55px]">
       <button
         v-for="tab in tabs"
         :key="tab.name"
@@ -13,6 +14,8 @@
         {{ tab.label }}
       </button>
     </div>
+
+    <!-- Contents -->
     <div class="tab-content">
       <template v-for="tab in tabs">
         <slot :name="tab.name" v-if="activeTab === tab.name" />
