@@ -9,17 +9,6 @@
     />
 
     <template v-else>
-      <!-- Header -->
-      <div
-        class="flex flex-row h-[60px] justify-between items-center px-4 border-b border-gray-300"
-      >
-        <!-- Left -->
-        <h1 class="text-2xl font-bold">TailwindCSS Playground</h1>
-
-        <!-- Right -->
-        <div class="flex flex-row"></div>
-      </div>
-
       <!-- Body -->
       <div
         class="flex"
