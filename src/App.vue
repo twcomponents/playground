@@ -11,7 +11,7 @@
     <template v-else>
       <!-- Body -->
       <div
-        class="flex"
+        class="flex flex-row"
         :class="{
           'flex-col': selectedLayout.key === 'vertical',
           'flex-row': selectedLayout.key === 'horizontal',
@@ -430,7 +430,7 @@
     },
   ];
 
-  const selectedBreakpoint = ref(screenBreakPoints[3]);
+  const selectedBreakpoint = ref(screenBreakPoints[1]);
 
   const onSelectBreakpoint = async (breakpoint: any) => {
     selectedBreakpoint.value = breakpoint;
