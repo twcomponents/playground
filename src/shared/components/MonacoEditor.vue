@@ -75,7 +75,7 @@
   );
 
   const handleTailwindConfigChange = () => {
-    let config = {
+    let config: any = {
         darkMode: 'class',
       },
       configString = props.tailwindConfig.replace('export default', '');
