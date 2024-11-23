@@ -54,6 +54,7 @@
                 "
                 language="javascript"
                 :layout="selectedLayout"
+                :theme="editorTheme"
                 @change="updateConfigBlock($event)"
               />
             </template>
@@ -70,6 +71,7 @@
                   "
                   :layout="selectedLayout"
                   :tailwindConfig="tailwindConfig"
+                  :theme="editorTheme"
                   @change="updateCodeBlock($event)"
                 />
               </div>
@@ -87,6 +89,7 @@
                   "
                   :layout="selectedLayout"
                   language="css"
+                  :theme="editorTheme"
                   @change="updateCssBlock($event)"
                 />
               </div>
@@ -268,6 +271,8 @@
   ];
 
   const isLoading = ref(true);
+
+  const editorTheme = ref('vs-dark');
 
   // #region Code Editor / Preview
 
@@ -492,6 +497,21 @@
     restoreLayout();
     restoreBreakpoint();
     restoreCodes();
+
+    // #region Editor Theme Switcher
+
+    const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    colorSchemeQuery.addEventListener(
+      'change',
+      (event: MediaQueryListEvent): void => {
+        editorTheme.value = event.matches ? 'vs-dark' : 'vs-light';
+      }
+    );
+
+    editorTheme.value = colorSchemeQuery.matches ? 'vs-dark' : 'vs-light';
+
+    // #endregion
 
     setTimeout(() => {
       isLoading.value = false;
