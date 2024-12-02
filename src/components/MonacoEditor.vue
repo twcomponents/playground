@@ -26,6 +26,9 @@
   import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker.js?worker';
   import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker.js?worker';
 
+  // utils
+  import JsonUtils from '@/shared/utils/json.util';
+
   const editorContainer = ref(null);
 
   const emitters = defineEmits(['change']);
@@ -80,17 +83,14 @@
 
   const handleTailwindConfigChange = () => {
     let config: any = {
-        darkMode: 'class',
-      },
-      configString = props.tailwindConfig.replace('export default', '');
+      darkMode: 'class',
+    };
 
-    try {
-      config = JSON.parse(configString.replace(/(\w+):/g, '"$1":'));
-    } catch (error) {
-      console.error(error, configString.replace(/(\w+):/g, '"$1":'));
-    }
-
-    return config;
+    return (
+      JsonUtils.stringToJsonObject(
+        props.tailwindConfig.replace('export default', '')
+      ) ?? config
+    );
   };
 
   const initEditor = () => {
