@@ -525,6 +525,18 @@
 
   // #endregion
 
+  // #region Shortcuts
+
+  const handleCtrlS = (event: KeyboardEvent) => {
+    if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+      event.preventDefault();
+
+      updatePreviewCode();
+    }
+  };
+
+  // #endregion
+
   onMounted(() => {
     tippy('[data-tippy-content]');
 
@@ -550,5 +562,7 @@
     setTimeout(() => {
       isLoading.value = false;
     }, Math.random() * 1000);
+
+    document.addEventListener('keydown', handleCtrlS);
   });
 </script>
