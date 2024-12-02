@@ -8,7 +8,7 @@
       :key="button.key"
       class="flex flex-row gap-3 justify-center items-center border border-transparent px-5 py-1 my-1 rounded-md transition-all duration-200 ease-in-out"
       :class="{
-        'bg-theme2-100 text-theme2-600 border-theme2-800':
+        'bg-twc-theme-100 text-twc-theme-600 border-twc-theme-800':
           props.selectedButton.key === button.key,
       }"
       @click="onButtonClick(button)"
@@ -17,7 +17,7 @@
         :is="button.icon"
         class="size-4 text-gray-400"
         :class="{
-          '!text-theme2-600': props.selectedButton.key === button.key,
+          '!text-twc-theme-600': props.selectedButton.key === button.key,
         }"
         :style="{
           'stroke-width': '2px',
