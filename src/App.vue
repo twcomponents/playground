@@ -393,7 +393,7 @@
 
     await localForage.getItem('code-block').then((code) => {
       if (code) {
-        console.log(code);
+        // console.log(code);
         codeBlock.value = code.toString();
       }
     });
@@ -490,21 +490,31 @@
   const onEditorLayoutChange = async (layout: any) => {
     selectedLayout.value = layout;
 
+    // if layout is selected as horizontal and breakpoint is 2xl, switch to xl
+    // in this case, the preview will be displayed in full screen
     if (layout.key === 'horizontal' && selectedBreakpoint.value.key === '2xl') {
       selectedBreakpoint.value =
         screenBreakPoints[
           screenBreakPoints.findIndex((breakpoint) => breakpoint.key === 'xl')
         ];
+
+      await localForage.setItem(
+        'preview-breakpoint',
+        selectedBreakpoint.value.key
+      );
     }
 
     await localForage.setItem('editor-layout', layout.key);
   };
 
   const restoreLayout = async () => {
-    await localForage.getItem('editor-layout').then((layout) => {
-      if (layout) {
+    await localForage.getItem('editor-layout').then((layoutKey) => {
+      console.log(layoutKey);
+
+      if (layoutKey) {
         selectedLayout.value =
-          editorLayouts.find((l) => l.key === layout) || editorLayouts[1];
+          editorLayouts.find((_layout) => _layout.key === layoutKey) ||
+          editorLayouts[1];
       }
     });
   };

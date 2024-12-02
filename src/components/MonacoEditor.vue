@@ -171,7 +171,6 @@
   };
 
   onMounted(() => {
-    console.log('mounted');
     resetEditor();
     initEditor();
   });
