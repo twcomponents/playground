@@ -177,8 +177,8 @@
   import { onMounted, ref } from 'vue';
 
   // components
-  import MonacoEditor from '@/shared/components/MonacoEditor.vue';
-  import ButtonGroup from '@/shared/components/ButtonGroup.vue';
+  import MonacoEditor from '@/components/MonacoEditor.vue';
+  import ButtonGroup from '@/components/ButtonGroup.vue';
 
   // icons
   import {
