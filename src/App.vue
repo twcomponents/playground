@@ -31,59 +31,72 @@
                 : '500px',
           }"
         >
-          <Tabs :tabs="tabs" defaultTab="tab2">
-            <!-- Config Editor -->
-            <template #tab1>
-              <MonacoEditor
-                :code="tailwindConfig"
-                :height="
-                  selectedLayout.key === 'horizontal'
-                    ? 'calc(100vh - 60px)'
-                    : '440px'
-                "
-                language="javascript"
-                :layout="selectedLayout"
-                :theme="editorTheme"
-                @change="updateConfigBlock($event)"
-              />
-            </template>
+          <ButtonGroup
+            :buttons="tabButtons"
+            :selectedButton="selectedGroupButton"
+            @change="selectedGroupButton = $event"
+          ></ButtonGroup>
 
-            <!-- Template Editor -->
-            <template #tab2>
-              <div>
-                <MonacoEditor
-                  :code="codeBlock"
-                  :height="
-                    selectedLayout.key === 'horizontal'
-                      ? 'calc(100vh - 60px)'
-                      : '440px'
-                  "
-                  :layout="selectedLayout"
-                  :tailwindConfig="tailwindConfig"
-                  :theme="editorTheme"
-                  @change="updateCodeBlock($event)"
-                />
-              </div>
-            </template>
+          <!-- Config Editor -->
+          <div
+            :class="{
+              hidden: selectedGroupButton.key !== 'config-tab',
+            }"
+          >
+            <MonacoEditor
+              :code="tailwindConfig"
+              :height="
+                selectedLayout.key === 'horizontal'
+                  ? 'calc(100vh - 60px)'
+                  : '440px'
+              "
+              language="javascript"
+              :layout="selectedLayout"
+              :theme="editorTheme"
+              @change="updateConfigBlock($event)"
+            />
+          </div>
 
-            <!-- CSS Editor -->
-            <template #tab3>
-              <div>
-                <MonacoEditor
-                  :code="extraCss"
-                  :height="
-                    selectedLayout.key === 'horizontal'
-                      ? 'calc(100vh - 60px)'
-                      : '440px'
-                  "
-                  :layout="selectedLayout"
-                  language="css"
-                  :theme="editorTheme"
-                  @change="updateCssBlock($event)"
-                />
-              </div>
-            </template>
-          </Tabs>
+          <!-- Template Editor -->
+          <div
+            :class="{
+              hidden: selectedGroupButton.key !== 'editor-tab',
+            }"
+          >
+            <MonacoEditor
+              :code="codeBlock"
+              :height="
+                selectedLayout.key === 'horizontal'
+                  ? 'calc(100vh - 60px)'
+                  : '440px'
+              "
+              :layout="selectedLayout"
+              :tailwindConfig="tailwindConfig"
+              :theme="editorTheme"
+              :loadTailwindIntellisense="true"
+              @change="updateCodeBlock($event)"
+            />
+          </div>
+
+          <!-- CSS Editor -->
+          <div
+            :class="{
+              hidden: selectedGroupButton.key !== 'css-tab',
+            }"
+          >
+            <MonacoEditor
+              :code="extraCss"
+              :height="
+                selectedLayout.key === 'horizontal'
+                  ? 'calc(100vh - 60px)'
+                  : '440px'
+              "
+              :layout="selectedLayout"
+              language="css"
+              :theme="editorTheme"
+              @change="updateCssBlock($event)"
+            />
+          </div>
         </div>
 
         <!-- Right -->
@@ -164,7 +177,7 @@
 
   // components
   import MonacoEditor from '@/shared/components/MonacoEditor.vue';
-  import Tabs from '@/shared/components/Tabs.vue';
+  import ButtonGroup from '@/shared/components/ButtonGroup.vue';
 
   // icons
   import {
@@ -253,15 +266,14 @@
     background-color: red;
 }`);
 
-  const tabs = [
-    { name: 'tab1', label: 'Config', icon: Bolt },
-    { name: 'tab2', label: 'Editor', icon: LayoutPanelTop },
-    { name: 'tab3', label: 'CSS', icon: Palette },
-  ];
-
   const isLoading = ref(true);
-
   const editorTheme = ref('vs-dark');
+  const tabButtons = ref([
+    { key: 'config-tab', label: 'Config', icon: Bolt },
+    { key: 'editor-tab', label: 'Editor', icon: LayoutPanelTop },
+    { key: 'css-tab', label: 'CSS', icon: Palette },
+  ]);
+  const selectedGroupButton = ref(tabButtons.value[1]);
 
   // #region Code Editor / Preview
 
