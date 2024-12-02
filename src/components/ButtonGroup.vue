@@ -1,18 +1,24 @@
 <template>
   <!-- Buttons -->
-  <div class="flex flex-row justify-center items-center border-b h-[55px]">
+  <div
+    class="flex flex-row justify-center items-center border-b dark:border-zinc-800 h-[55px]"
+  >
     <button
       v-for="button in props.buttons"
       :key="button.key"
-      :class="[
-        'flex flex-row gap-3 justify-center items-center border-b border-gray-300 px-5 py-2',
-        { 'border-theme1-500': props.selectedButton.key === button.key },
-      ]"
+      class="flex flex-row gap-3 justify-center items-center border border-transparent px-5 py-1 my-1 rounded-md transition-all duration-200 ease-in-out"
+      :class="{
+        'bg-theme2-100 text-theme2-600 border border-theme2-800':
+          props.selectedButton.key === button.key,
+      }"
       @click="onButtonClick(button)"
     >
       <component
         :is="button.icon"
-        class="size-4 text-gray-600"
+        class="size-4 text-gray-400"
+        :class="{
+          '!text-theme2-600': props.selectedButton.key === button.key,
+        }"
         :style="{
           'stroke-width': '2px',
         }"
