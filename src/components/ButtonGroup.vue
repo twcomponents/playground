@@ -1,7 +1,7 @@
 <template>
   <!-- Buttons -->
   <div
-    class="flex flex-row justify-center items-center border-b dark:border-zinc-800 h-[55px]"
+    class="flex flex-row justify-center items-center border-b dark:border-zinc-700 h-[55px]"
   >
     <button
       v-for="button in props.buttons"
