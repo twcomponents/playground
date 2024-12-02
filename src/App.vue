@@ -35,6 +35,7 @@
             :buttons="tabButtons"
             :selectedButton="selectedGroupButton"
             @change="selectedGroupButton = $event"
+            class="py-1"
           ></ButtonGroup>
 
           <!-- Config Editor -->
@@ -109,14 +110,14 @@
         >
           <!-- Header -->
           <div
-            class="flex flex-row justify-between p-2 border-b border-gray-300 h-[55px]"
+            class="flex flex-row justify-between p-2 border-b border-gray-300"
           >
             <!-- Device Breakpoints -->
             <div class="flex flex-row gap-2">
               <button
                 v-for="screenBreakPoint in screenBreakPoints"
                 :key="screenBreakPoint.label"
-                class="flex items-center justify-center w-10 h-10 border border-gray-300 text-gray-500 hover:text-theme2-600 rounded-md"
+                class="flex items-center justify-center size-8 border border-gray-300 text-gray-500 hover:text-theme2-600 rounded-md"
                 :class="{
                   'bg-theme2-100 border-theme2-400 text-theme2-600 hover:text-theme2-700':
                     screenBreakPoint.key === selectedBreakpoint?.key,
@@ -143,7 +144,7 @@
                   v-for="layout in editorLayouts"
                   :key="layout.key"
                   @click="onEditorLayoutChange(layout)"
-                  class="flex items-center justify-center w-8 h-8 border text-gray-500 hover:text-theme2-600 rounded-md"
+                  class="flex items-center justify-center size-8 border text-gray-500 hover:text-theme2-600 rounded-md"
                   :class="{
                     'bg-theme2-100 text-theme2-500':
                       selectedLayout.key === layout.key,

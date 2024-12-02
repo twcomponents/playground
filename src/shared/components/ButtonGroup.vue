@@ -3,7 +3,7 @@
   <div class="flex flex-row justify-center items-center border-b h-[55px]">
     <button
       v-for="button in props.buttons"
-      :key="button.name"
+      :key="button.key"
       :class="[
         'flex flex-row gap-3 justify-center items-center border-b border-gray-300 px-5 py-2',
         { 'border-theme1-500': props.selectedButton.key === button.key },
