@@ -448,11 +448,15 @@
   const onSelectBreakpoint = async (breakpoint: any) => {
     selectedBreakpoint.value = breakpoint;
 
+    // if breakpoint is selected as 2xl and layout is horizontal, switch to vertical
+
     if (breakpoint.key === '2xl') {
       selectedLayout.value =
         editorLayouts[
           editorLayouts.findIndex((layout) => layout.key === 'vertical')
         ];
+
+      await localForage.setItem('editor-layout', selectedLayout.value.key);
     }
 
     await localForage.setItem('preview-breakpoint', breakpoint.key);
