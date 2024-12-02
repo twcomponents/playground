@@ -8,7 +8,7 @@
       :key="button.key"
       class="flex flex-row gap-3 justify-center items-center border border-transparent px-5 py-1 my-1 rounded-md transition-all duration-200 ease-in-out"
       :class="{
-        'bg-theme2-100 text-theme2-600 border border-theme2-800':
+        'bg-theme2-100 text-theme2-600 border-theme2-800':
           props.selectedButton.key === button.key,
       }"
       @click="onButtonClick(button)"

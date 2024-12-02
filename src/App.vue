@@ -119,7 +119,7 @@
                 :key="screenBreakPoint.label"
                 class="flex items-center justify-center size-8 border border-gray-300 dark:border-zinc-700 text-gray-500 hover:text-theme2-600 rounded-md"
                 :class="{
-                  'bg-theme2-100 text-theme2-600 border border-theme2-800':
+                  'bg-theme2-100 text-theme2-600 border-theme2-400 dark:border-theme2-800':
                     screenBreakPoint.key === selectedBreakpoint?.key,
                 }"
                 @click="onSelectBreakpoint(screenBreakPoint)"
@@ -146,7 +146,7 @@
                   @click="onEditorLayoutChange(layout)"
                   class="flex items-center justify-center size-8 border text-gray-500 dark:border-zinc-700 hover:text-theme2-600 rounded-md"
                   :class="{
-                    'bg-theme2-100 text-theme2-600 border border-theme2-800':
+                    'bg-theme2-100 text-theme2-600 border-theme2-400 dark:border-theme2-800':
                       selectedLayout.key === layout.key,
                   }"
                   :data-tippy-content="layout.label"
