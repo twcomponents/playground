@@ -70,6 +70,11 @@
         </div>
     </div>
 </div>`);
+  const extraCss = ref(`.custom {
+    height: 100px;
+    width: 100px;
+    background-color: red;
+}`);
 
   onMounted(() => {
     setTimeout(() => {

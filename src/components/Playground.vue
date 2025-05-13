@@ -198,6 +198,23 @@
   import { NxTailSpinLoader } from '@ngeenx/nx-vue-svg-loaders';
   import Navbar from '@/layouts/partials/Navbar.vue';
 
+  const props = defineProps({
+    isLoading: {
+      type: Boolean,
+      default: true,
+    },
+    codeBlock: {
+      type: String,
+      default: '',
+    },
+    extraCss: {
+      type: String,
+      default: '',
+    },
+  });
+
+  const emit = defineEmits(['onLoading']);
+
   const tailwindConfig = ref(`export default {
     theme: {
     extend: {
@@ -260,12 +277,6 @@
   </body>
   </html>`);
 
-  const extraCss = ref(`.custom {
-    height: 100px;
-    width: 100px;
-    background-color: red;
-}`);
-
   const editorTheme = ref('vs-dark');
   const tabButtons = ref([
     { key: 'config-tab', label: 'Config', icon: Bolt },
@@ -273,19 +284,7 @@
     { key: 'css-tab', label: 'CSS', icon: Palette },
   ]);
   const selectedGroupButton = ref(tabButtons.value[1]);
-
-  const props = defineProps({
-    isLoading: {
-      type: Boolean,
-      default: true,
-    },
-    codeBlock: {
-      type: String,
-      default: '',
-    },
-  });
-
-  const emit = defineEmits(['onLoading']);
+  const extraCss = ref(props.extraCss);
 
   // #region Code Editor / Preview
 
