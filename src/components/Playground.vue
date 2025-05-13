@@ -346,7 +346,6 @@
 
     await localForage.getItem('code-block').then((code) => {
       if (code) {
-        // console.log(code);
         codeBlock.value = code.toString();
       }
     });
@@ -466,8 +465,6 @@
 
   const restoreLayout = async () => {
     await localForage.getItem('editor-layout').then((layoutKey) => {
-      console.log(layoutKey);
-
       if (layoutKey) {
         selectedLayout.value =
           editorLayouts.find((_layout) => _layout.key === layoutKey) ||
