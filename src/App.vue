@@ -541,8 +541,6 @@
   // #endregion
 
   onMounted(() => {
-    tippy('[data-tippy-content]');
-
     restoreLayout();
     restoreBreakpoint();
     restoreCodes();
@@ -564,6 +562,10 @@
 
     setTimeout(() => {
       isLoading.value = false;
+
+      setTimeout(() => {
+        tippy('[data-tippy-content]');
+      }, 500);
     }, Math.random() * 1000);
 
     document.addEventListener('keydown', handleCtrlS);
