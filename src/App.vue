@@ -7,8 +7,8 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue';
 
-  import Navbar from '@/layouts/partials/Navbar.vue';
-  import Playground from '@/components/Playground.vue';
+  import Navbar from '@playground-app/layouts/partials/Navbar.vue';
+  import Playground from '@playground-app/components/Playground.vue';
 
   const isLoading = ref(true);
   const codeBlock = ref(`<!--

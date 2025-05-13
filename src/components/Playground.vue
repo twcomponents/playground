@@ -175,8 +175,8 @@
   import { onMounted, ref } from 'vue';
 
   // components
-  import MonacoEditor from '@/components/MonacoEditor.vue';
-  import ButtonGroup from '@/components/ButtonGroup.vue';
+  import MonacoEditor from '@playground-app/components/MonacoEditor.vue';
+  import ButtonGroup from '@playground-app/components/ButtonGroup.vue';
 
   // icons
   import {
@@ -196,7 +196,7 @@
   import tippy from 'tippy.js';
   import localForage from 'localforage';
   import { NxTailSpinLoader } from '@ngeenx/nx-vue-svg-loaders';
-  import Navbar from '@/layouts/partials/Navbar.vue';
+  import Navbar from '@playground-app/layouts/partials/Navbar.vue';
 
   const props = defineProps({
     isLoading: {

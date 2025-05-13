@@ -27,7 +27,7 @@
   import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker.js?worker';
 
   // utils
-  import JsonUtils from '@/shared/utils/json.util';
+  import JsonUtils from '@playground-app/shared/utils/json.util';
 
   const editorContainer = ref(null);
 
