@@ -1,7 +1,11 @@
 <template>
   <Navbar />
 
-  <Playground :codeBlock="codeBlock" :isLoading="isLoading" />
+  <Playground
+    :codeBlock="codeBlock"
+    :isLoading="isLoading"
+    :extraCss="extraCss"
+  />
 </template>
 
 <script setup lang="ts">
