@@ -1,10 +1,10 @@
 <template>
   <NxTailSpinLoader
-    :isLoading="isLoading"
+    :isLoading="props.isLoading"
     :size="70"
     :isCentered="true"
     class="text-twc-theme-500 h-screen"
-    v-if="isLoading"
+    v-if="props.isLoading"
   />
 
   <template v-else>
@@ -266,7 +266,6 @@
     background-color: red;
 }`);
 
-  const isLoading = ref(true);
   const editorTheme = ref('vs-dark');
   const tabButtons = ref([
     { key: 'config-tab', label: 'Config', icon: Bolt },
@@ -274,6 +273,15 @@
     { key: 'css-tab', label: 'CSS', icon: Palette },
   ]);
   const selectedGroupButton = ref(tabButtons.value[1]);
+
+  const props = defineProps({
+    isLoading: {
+      type: Boolean,
+      default: true,
+    },
+  });
+
+  const emit = defineEmits(['onLoading']);
 
   // #region Code Editor / Preview
 
@@ -557,8 +565,6 @@
     // #endregion
 
     setTimeout(() => {
-      isLoading.value = false;
-
       setTimeout(() => {
         tippy('[data-tippy-content]');
       }, 500);
