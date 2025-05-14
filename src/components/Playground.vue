@@ -309,8 +309,6 @@
   const updateCodeBlock = async (code: string) => {
     codeBlock.value = code;
 
-    await localForage.setItem('code-block', code);
-
     updatePreviewCode();
   };
 
@@ -340,12 +338,6 @@
     await localForage.getItem('extra-css').then((css) => {
       if (css) {
         extraCss.value = css.toString();
-      }
-    });
-
-    await localForage.getItem('code-block').then((code) => {
-      if (code) {
-        codeBlock.value = code.toString();
       }
     });
 
