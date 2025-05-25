@@ -1,5 +1,9 @@
 export default class JsonUtil {
   public static stringToJsonObject = (jsonString: string): object | null => {
+    if (jsonString === null || jsonString === undefined || jsonString.trim() === '') {
+      return null;
+    }
+
     try {
       // map keys
       jsonString = jsonString.replace(/(\w+):/g, '"$1":');
