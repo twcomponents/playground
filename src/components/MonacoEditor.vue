@@ -11,7 +11,14 @@
   import { onMounted, ref, watch, defineProps } from 'vue';
 
   // monaco
-  import * as monaco from 'monaco-editor';
+  import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+
+  // CSS desteği
+  import 'monaco-editor/esm/vs/language/css/monaco.contribution';
+
+  // HTML desteği
+  import 'monaco-editor/esm/vs/language/html/monaco.contribution';
+
   import {
     configureMonacoTailwindcss,
     MonacoTailwindcss,
@@ -23,8 +30,6 @@
   import TailwindcssWorker from '../lib/tailwindcss.worker.js?worker';
   import CssWorker from 'monaco-editor/esm/vs/language/css/css.worker.js?worker';
   import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker.js?worker';
-  import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker.js?worker';
-  import TypescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker.js?worker';
 
   // utils
   import JsonUtils from '@playground-app/shared/utils/json.util';
